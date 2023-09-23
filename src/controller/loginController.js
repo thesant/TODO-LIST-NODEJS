@@ -1,8 +1,33 @@
 import{connection} from "../../db.js"
 export const login=(req,res)=>{
+  
     res.render('templates/login')
 };
+export const loginUser=(req,res)=>{
 
+    const { email, password } = req.body;
+    // Valida os dados do formulário
+    if (!email || !password) {
+        res.status(400).send("Os dados do formulário estão inválidos.");
+        return;
+    }
+    // Verifica se o usuário existe no banco de dados
+     connection.query(`SELECT * FROM User WHERE email = ? AND password=?`, [email,password], (err, results) => {
+    if (err) {
+      res.status(500).send("Erro ao verificar o usuário.");
+      return;
+    }
+
+    if (!results.length) {
+      res.status(401).send("Usuário não encontrado.");
+      return;
+    }
+
+
+    // Redireciona o usuário para a página protegida
+    res.redirect("/dashboard");
+  });
+}
 export const registerUser=(req,res) => {
     const q = "INSERT INTO User(`email`,`password`) VALUES(?)";
     const values = [

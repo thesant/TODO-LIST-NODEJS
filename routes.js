@@ -1,11 +1,12 @@
 import express from "express"
 import {home} from './src/controller/homeController.js';
-import {login,registerUser,updateUser,deleteUSer} from'./src/controller/loginController.js';
+import {login,loginUser,registerUser,updateUser,deleteUSer} from'./src/controller/loginController.js';
 
 const route = express.Router();
 
-route.get('/',home);
-route.get('/login', login);
+route.get('/dashboard',home);
+route.get('/', login);
+route.post('/login/user', loginUser);
 route.post('/login/register', registerUser);
 route.put('/login/update/:id', updateUser);
 route.delete('/login/delete/:id', deleteUSer);

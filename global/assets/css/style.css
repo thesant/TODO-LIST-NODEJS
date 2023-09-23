@@ -1,0 +1,13 @@
+.mb-3 p{
+    visibility: hidden;
+}
+
+
+.mb-3.error input{
+    border-color: #ff3b25;
+  }
+  
+  .mb-3.error p{
+    color: #ff3b25;
+    visibility: visible;
+  }
