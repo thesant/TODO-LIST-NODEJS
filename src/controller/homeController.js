@@ -2,12 +2,22 @@ import{connection} from "../../db.js"
 
 
 export const home = (req,res) => {
-    connection.query('SELECT * FROM User', (err, results) => {
-        if (err) {
-          res.status(500).send('Erro ao acessar o banco de dados');
-          return;
-        }
+   
         res.render('index'); 
-    });
 }
 
+export const registerTask=(req,res) => {
+  const q = "INSERT INTO Task(`taskUser`,`username` ,`status`) VALUES(?)";
+  const values = [
+    req.body.taskUser,
+    req.body.username,
+    req.body.iniciado,
+];
+ 
+
+  connection.query(q,[values],(err) => {
+      if(err) return res.json(err);
+      //return res.status(200).json("Tarefa criada com sucesso");
+    return res.render('index')
+  });
+};
