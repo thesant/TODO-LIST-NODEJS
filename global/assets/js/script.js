@@ -3,9 +3,11 @@ const email = document.getElementById('email');
 const password1 = document.getElementById('password1');
 const password2 = document.getElementById('password2');
 
+
 form.addEventListener('submit',(event)=>{
     event.preventDefault();
     checkForm();
+    getEndereco();
    
 })
 
@@ -60,4 +62,28 @@ function checkForm() {
     if(isValid){
         alert("Cadastrado com sucesso")
     }
+}
+
+function getEndereco(){
+   let cep = document.querySelector('#cep').value;
+   
+   if(cep.length !== 8){
+        alert(`CEP INVALIDO`);
+        return;
+   }
+   let url=`https://viacep.com.br/ws/${cep}/json/`
+   fetch(url).then(function(response) {
+        response.json().then(function(data){
+            exibeEndereco(data)
+        })
+   });
+}
+
+function exibeEndereco(dados) {
+    let bairro = document.getElementById('bairro').value = dados.bairro; 
+    let logradouro = document.getElementById('logradouro').value = dados.logradouro;
+    let localidade = document.getElementById('localidade').value = dados.localidade;
+    let uf = document.getElementById('uf').value = dados.uf;
+    
+    
 }
